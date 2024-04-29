@@ -12,9 +12,10 @@ import ooo.foooooooooooo.yep.messages.DeathMessage;
 public class EventListener {
     @SubscribeEvent
     public static void onDeathEvent(LivingDeathEvent event) {
-        if (event.getEntityLiving() instanceof ServerPlayerEntity player) {
-            var username = player.getDisplayName().getString();
-            var message = getComponentText(event.getSource().getDeathMessage(player)).replace(username + " ", "");
+        if (event.getEntityLiving() instanceof ServerPlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
+            String username = player.getDisplayName().getString();
+            String message = getComponentText(event.getSource().getDeathMessage(player)).replace(username + " ", "");
 
             PluginMessenger.sendMessage(player, new DeathMessage(message));
         }
@@ -30,8 +31,8 @@ public class EventListener {
         }
 
         if (display.shouldAnnounceToChat()) {
-            var title = getComponentText(display.getTitle());
-            var description = getComponentText(display.getDescription());
+            String title = getComponentText(display.getTitle());
+            String description = getComponentText(display.getDescription());
 
             PluginMessenger.sendMessage((ServerPlayerEntity) event.getPlayer(), new AdvancementMessage(title, description));
         }
